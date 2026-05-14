@@ -7,9 +7,10 @@ type ColumnProps = {
     tasks: Record<string,Task>
     onDeleteTask: (taskId: string) => void
     onMoveTask: (taskId: string) => void
+    onEditTask: (task: Task) => void
 }
 
-export const Column = ({column, tasks, onDeleteTask, onMoveTask}: ColumnProps) => {
+export const Column = ({column, tasks, onDeleteTask, onMoveTask, onEditTask}: ColumnProps) => {
     return(
         <div className="column">
             <h3 className="columnTitle">{column.title}</h3>
@@ -28,6 +29,8 @@ export const Column = ({column, tasks, onDeleteTask, onMoveTask}: ColumnProps) =
                                             title={task.title}
                                             onDelete={() => onDeleteTask(taskId)} 
                                             onMove={() => onMoveTask(taskId)}
+                                            onEdit={() => onEditTask(task)}
+                                            task={task}
                                         />
                             })
                         }

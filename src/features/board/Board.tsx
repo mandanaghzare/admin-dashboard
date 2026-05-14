@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { mockData } from "./mockData"
-import type { BoardData } from "./types"
+import type { BoardData, Task } from "./types"
 import { Column } from "./Column"
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd"
 import { TaskChart } from "../dashboard/TasksChart"
 import { LiveActivityChart } from "../dashboard/LiveActivityChart"
 import { loadBoard, saveBoard } from "../../shared/lib/storage"
+import TaskModal from "./components/TaskModal"
 
 const Board = () => {
   
@@ -19,6 +20,7 @@ const Board = () => {
   
   const {tasks, columns, columnOrder} = data;
   const [taskTitle, setTaskTitle] = useState("");
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
 
   const handleAddTask = () => {
@@ -170,6 +172,16 @@ const Board = () => {
     })
   }
 
+  const handleUpdateTask = (updateTask: Task) => {
+    setData(prev => ({
+      ...prev,
+      tasks: {
+        ...prev.tasks,
+        [updateTask.id]: updateTask
+      }
+    }))
+  }
+
   useEffect(() => {
     saveBoard(data)
   }, [data])
@@ -202,6 +214,7 @@ const Board = () => {
                     tasks={tasks}
                     onDeleteTask={handleDeleteTask}
                     onMoveTask={handleMoveTask}
+                    onEditTask={(task) => setSelectedTask(task)}
                   />
                 )
               })
@@ -212,6 +225,7 @@ const Board = () => {
           <TaskChart columns={columns} />
         </div>        
         <LiveActivityChart />
+        <TaskModal task={selectedTask} onSave={handleUpdateTask} onClose={() => setSelectedTask(null)} />
     </div>
   )
 }
