@@ -23,6 +23,8 @@ const Board = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
 
+  
+
   const handleAddTask = () => {
     setData((prev) => {
       if(!taskTitle.trim()) return prev
@@ -172,6 +174,8 @@ const Board = () => {
     })
   }
 
+  
+
   const handleUpdateTask = (updateTask: Task) => {
     setData(prev => ({
       ...prev,
@@ -214,7 +218,10 @@ const Board = () => {
                     tasks={tasks}
                     onDeleteTask={handleDeleteTask}
                     onMoveTask={handleMoveTask}
-                    onEditTask={(task) => setSelectedTask(task)}
+                    onEditTask={(task) => {
+  console.log("BOARD CALLBACK FIRED", task)
+  setSelectedTask(task)
+}}
                   />
                 )
               })

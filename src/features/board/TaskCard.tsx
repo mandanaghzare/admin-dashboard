@@ -16,7 +16,8 @@ export const TaskCard = ({title, onDelete, onMove, index, taskId, onEdit}: TaskC
     return <Draggable draggableId={taskId} index={index}>
                 {(provided) => (
                     <div className="card" ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                        <button onClick={() => onEdit()} className="editBtn">
+                        <button onClick={() => {console.log("edit clicked in TaskCard") 
+                            onEdit()}} className="editBtn">
                             <MdEdit  />
                         </button>
                         <div className="title">{title}</div>

@@ -16,6 +16,7 @@ const TaskModal = ({task, onClose, onSave} : TaskModalProps) => {
 
 
     const handleSave = () => {
+    console.log("hi")
         if(!task) return 
 
         onSave({
@@ -26,15 +27,26 @@ const TaskModal = ({task, onClose, onSave} : TaskModalProps) => {
         onClose()
     }
 
+    if (!task) return null
 
 
-    return(
-        <div className="taskTitle">
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <button onClick={handleSave}>Save</button>
-            <button onClick={onClose}>Close</button>
+    return (
+        <div className="modalOverlay">
+            <div className="modalContent">
+            <h2>Edit Task</h2>
+
+            <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+
+            <div className="modalActions">
+                <button onClick={handleSave}>Save</button>
+                <button onClick={onClose}>Cancel</button>
+            </div>
+            </div>
         </div>
-    )
+        )
     
 }
 

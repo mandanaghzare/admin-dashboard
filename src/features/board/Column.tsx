@@ -29,7 +29,9 @@ export const Column = ({column, tasks, onDeleteTask, onMoveTask, onEditTask}: Co
                                             title={task.title}
                                             onDelete={() => onDeleteTask(taskId)} 
                                             onMove={() => onMoveTask(taskId)}
-                                            onEdit={() => onEditTask(task)}
+                                            onEdit={() => {console.log("edit reached Column", task)
+                                                onEditTask(task)
+                                            }}
                                             task={task}
                                         />
                             })
