@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { mockData } from "./mockData"
-import type { BoardData, Task } from "./types"
+import { type Priority, type BoardData, type Task } from "./types"
 import { Column } from "./Column"
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd"
 import { TaskChart } from "../dashboard/TasksChart"
@@ -9,6 +9,7 @@ import { loadBoard, saveBoard } from "../../shared/lib/storage"
 import TaskModal from "./components/TaskModal"
 import Button from "../../shared/ui/Button"
 import Input from "../../shared/ui/Input"
+import Select from "../../shared/ui/Select/Select"
 
 const Board = () => {
   
@@ -20,9 +21,16 @@ const Board = () => {
     return structuredClone(mockData)
   })
   
+  const [showChart, setShowChart] = useState<boolean>(() => {
+    const saved = localStorage.getItem("showChart")
+    return saved ? JSON.parse(saved) : true
+  })
+
   const {tasks, columns, columnOrder} = data;
   const [taskTitle, setTaskTitle] = useState("");
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [priority, setPriority] = useState<Priority>("medium")
+  const [priorityFilter, setPriorityFilter] = useState<Priority | "all">("all")
 
 
   
@@ -42,6 +50,7 @@ const Board = () => {
       const newTask = {
         id: newId,
         title: taskTitle,
+        priority
       }
 
       return {
@@ -60,6 +69,7 @@ const Board = () => {
         },
       }
     })
+    setPriority("medium")
   }
 
   const handleDeleteTask = (taskId: string) => {
@@ -175,7 +185,6 @@ const Board = () => {
       }
     })
   }
-
   
 
   const handleUpdateTask = (updateTask: Task) => {
@@ -188,9 +197,34 @@ const Board = () => {
     }))
   }
 
+  const priorityOptions = [
+    { label: "Low", value:"low" },
+    { label: "Medium", value:"medium" },
+    { label: "High", value:"high" },
+  ]
+  const priorityFilterOptions = [
+  { label: "All", value: "all" },
+  { label: "Low", value: "low" },
+  { label: "Medium", value: "medium" },
+  { label: "High", value: "high" },
+]
+
   useEffect(() => {
     saveBoard(data)
   }, [data])
+
+  useEffect(() => {
+    localStorage.setItem("showChart", JSON.stringify(showChart))
+  }, [showChart])
+
+  const filteredTasks =
+    priorityFilter === "all"
+      ? tasks
+      : Object.fromEntries(
+          Object.entries(tasks).filter(
+            ([, task]) => task.priority === priorityFilter
+          )
+        )
 
   return (
     <div className='board'>
@@ -204,7 +238,19 @@ const Board = () => {
             onChange={setTaskTitle}
             placeHolder="Enter Task..."
           />
+          <Select value={priority} onChange={(value) => setPriority(value as Priority)} options={priorityOptions} />
           <Button variant="primary" onClick={handleAddTask}>Add Task</Button>
+        </div>
+        <div className="filterWrapper">
+          <span className="filterLabel">Filter by priority:</span>
+
+          <Select
+            value={priorityFilter}
+            onChange={(value) =>
+              setPriorityFilter(value as Priority | "all")
+            }
+            options={priorityFilterOptions}
+          />
         </div>
         <div className="todoList">
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -217,7 +263,7 @@ const Board = () => {
                   <Column 
                     key={column.id}
                     column={column}
-                    tasks={tasks}
+                    tasks={filteredTasks}
                     onDeleteTask={handleDeleteTask}
                     onMoveTask={handleMoveTask}
                     onEditTask={(task) => setSelectedTask(task)}
@@ -229,8 +275,13 @@ const Board = () => {
             </div>
           </DragDropContext>
           <TaskChart columns={columns} />
-        </div>        
-        <LiveActivityChart />
+        </div>
+        {showChart && <LiveActivityChart />}
+        <div className="chartToggleWrapper">
+          <Button variant="secondary" onClick={() => setShowChart((prev) => !prev)}>
+            {showChart ? "Hide Chart" : "Show Chart"}
+          </Button>
+        </div>
         <TaskModal task={selectedTask} onSave={handleUpdateTask} onClose={() => setSelectedTask(null)} />
     </div>
   )

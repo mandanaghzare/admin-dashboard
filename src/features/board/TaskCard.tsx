@@ -13,7 +13,7 @@ type TaskCardProps = {
     onEdit: () => void
 }
 
-export const TaskCard = ({title, onDelete, onMove, index, taskId, onEdit}: TaskCardProps) => {
+export const TaskCard = ({title, onDelete, onMove, index, taskId, onEdit, task}: TaskCardProps) => {
     return <Draggable draggableId={taskId} index={index}>
                 {(provided) => (
                     <div className="card" ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
@@ -21,6 +21,9 @@ export const TaskCard = ({title, onDelete, onMove, index, taskId, onEdit}: TaskC
                             <MdEdit  />
                         </button>
                         <div className="title">{title}</div>
+                        <div className={`priority priority-${task.priority}`}>
+                            {task.priority}
+                        </div>
                         <div className="action">
                             <Button variant="danger" onClick={onDelete}>Delete</Button>
                             <Button variant="primary" onClick={onMove}>Move To Next Level</Button>

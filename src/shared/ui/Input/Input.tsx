@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react"
+import './Input.scss'
 
 
 type InputProps = {

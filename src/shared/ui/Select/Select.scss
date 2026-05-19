@@ -1,0 +1,31 @@
+.select {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:focus {
+    border-color: #7c6df8;
+    box-shadow: 0 0 0 3px rgba(124, 109, 248, 0.18);
+  }
+}
+
+body.dark {
+  .select {
+    background: #1e293b;
+    color: #f8fafc;
+    border-color: #475569;
+
+    &:focus {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+    }
+  }
+}

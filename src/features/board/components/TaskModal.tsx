@@ -1,8 +1,9 @@
-import { useState } from "react";
-import type { Task } from "../types";
+import { useEffect, useState } from "react";
+import type { Priority, Task } from "../types";
 import Button from "../../../shared/ui/Button";
 import Input from "../../../shared/ui/Input";
 import Modal from "../../../shared/ui/Modal/Modal";
+import Select from "../../../shared/ui/Select/Select";
 
 
 type TaskModalProps = {
@@ -12,10 +13,17 @@ type TaskModalProps = {
 }
 
 
+const priorityOptions = [
+{ label: "Low", value:"low" },
+{ label: "Medium", value:"medium" },
+{ label: "High", value:"high" },
+]
+
 
 const TaskModal = ({task, onClose, onSave} : TaskModalProps) => {
 
     const [title, setTitle] = useState(task?.title || "")
+    const [priority, setPriority] = useState(task?.priority || "medium")
 
     const handleClose = () => {
         setTitle("")
@@ -29,12 +37,21 @@ const TaskModal = ({task, onClose, onSave} : TaskModalProps) => {
         onSave({
             ...task,
             title,
+            priority
         })
         setTitle("")
         onClose()
     }
 
+    useEffect(() => {
+        if (!task) return
+
+        setTitle(task.title)
+        setPriority(task.priority)
+        }, [task])
+
     if (!task) return null
+
 
 
     return (
@@ -47,6 +64,8 @@ const TaskModal = ({task, onClose, onSave} : TaskModalProps) => {
                 onChange={setTitle}
                 placeHolder="Edit Task..."
             />
+
+            <Select onChange={(value) => setPriority(value as Priority)} options={priorityOptions} value={priority} />
 
             <div className="modalActions">
                 <Button variant="primary" onClick={handleSave}>Save</Button>
