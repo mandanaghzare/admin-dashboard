@@ -7,6 +7,8 @@ import { TaskChart } from "../dashboard/TasksChart"
 import { LiveActivityChart } from "../dashboard/LiveActivityChart"
 import { loadBoard, saveBoard } from "../../shared/lib/storage"
 import TaskModal from "./components/TaskModal"
+import Button from "../../shared/ui/Button"
+import Input from "../../shared/ui/Input"
 
 const Board = () => {
   
@@ -196,13 +198,13 @@ const Board = () => {
             <h1>Board</h1>
         </div>
         <div className="addButton">
-          <input 
+          <Input 
             type="text"
             value={taskTitle}
-            onChange={(e) => setTaskTitle(e.target.value)}
-            placeholder="Enter Task..."
+            onChange={setTaskTitle}
+            placeHolder="Enter Task..."
           />
-          <button onClick={handleAddTask}>Add Task</button>
+          <Button variant="primary" onClick={handleAddTask}>Add Task</Button>
         </div>
         <div className="todoList">
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -218,10 +220,7 @@ const Board = () => {
                     tasks={tasks}
                     onDeleteTask={handleDeleteTask}
                     onMoveTask={handleMoveTask}
-                    onEditTask={(task) => {
-  console.log("BOARD CALLBACK FIRED", task)
-  setSelectedTask(task)
-}}
+                    onEditTask={(task) => setSelectedTask(task)}
                   />
                 )
               })

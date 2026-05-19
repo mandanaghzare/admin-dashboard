@@ -1,0 +1,28 @@
+
+  .btn {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn--primary {
+  background: #7c5cff;
+  color: white;
+}
+
+.btn--danger {
+  background: #ffdede;
+  color: #ff4d4f;
+}
+
+.btn--secondary {
+  background: #ece8ff;
+  color: #7c5cff;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}

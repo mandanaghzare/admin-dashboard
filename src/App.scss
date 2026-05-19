@@ -135,6 +135,10 @@ body,
     display: flex;
     flex-direction: column;
     gap: 16px;
+    input{
+      padding: 8px;
+      border-radius: 6px;
+    }
   }
 
   .modalActions {
@@ -203,6 +207,7 @@ body,
       }
     }
   }
+
 
 @media (max-width: 1024px) {
   .cardList {

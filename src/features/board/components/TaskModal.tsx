@@ -1,5 +1,8 @@
 import { useState } from "react";
 import type { Task } from "../types";
+import Button from "../../../shared/ui/Button";
+import Input from "../../../shared/ui/Input";
+import Modal from "../../../shared/ui/Modal/Modal";
 
 
 type TaskModalProps = {
@@ -14,16 +17,20 @@ const TaskModal = ({task, onClose, onSave} : TaskModalProps) => {
 
     const [title, setTitle] = useState(task?.title || "")
 
+    const handleClose = () => {
+        setTitle("")
+        onClose()
+    }
 
     const handleSave = () => {
-    console.log("hi")
         if(!task) return 
+        if(!title) return
 
         onSave({
             ...task,
             title,
         })
-
+        setTitle("")
         onClose()
     }
 
@@ -31,21 +38,22 @@ const TaskModal = ({task, onClose, onSave} : TaskModalProps) => {
 
 
     return (
-        <div className="modalOverlay">
+        <Modal isOpen={!!task} onClose={onClose}>
             <div className="modalContent">
             <h2>Edit Task</h2>
 
-            <input
+            <Input
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={setTitle}
+                placeHolder="Edit Task..."
             />
 
             <div className="modalActions">
-                <button onClick={handleSave}>Save</button>
-                <button onClick={onClose}>Cancel</button>
+                <Button variant="primary" onClick={handleSave}>Save</Button>
+                <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             </div>
             </div>
-        </div>
+        </Modal>
         )
     
 }

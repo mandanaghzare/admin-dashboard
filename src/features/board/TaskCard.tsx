@@ -1,6 +1,7 @@
 import { Draggable } from "@hello-pangea/dnd"
 import type { Task } from "./types"
 import { MdEdit } from "react-icons/md"
+import Button from "../../shared/ui/Button"
 
 type TaskCardProps = {
     title: string
@@ -16,14 +17,13 @@ export const TaskCard = ({title, onDelete, onMove, index, taskId, onEdit}: TaskC
     return <Draggable draggableId={taskId} index={index}>
                 {(provided) => (
                     <div className="card" ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                        <button onClick={() => {console.log("edit clicked in TaskCard") 
-                            onEdit()}} className="editBtn">
+                        <button onClick={() => {onEdit()}} className="editBtn">
                             <MdEdit  />
                         </button>
                         <div className="title">{title}</div>
                         <div className="action">
-                            <button className="deleteBtn" onClick={onDelete}>Delete</button>
-                            <button className="moveBtn" onClick={onMove}>Move To Next Level</button>
+                            <Button variant="danger" onClick={onDelete}>Delete</Button>
+                            <Button variant="primary" onClick={onMove}>Move To Next Level</Button>
                         </div>
                     </div>
                 )}
