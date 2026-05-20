@@ -55,6 +55,10 @@ This project focuses on complex state management, drag-and-drop interactions, da
 - Hover edit action
 - Mobile-friendly theme toggle
 
+## Live Demo
+
+https://admin-dashboard-dusky-rho-45.vercel.app
+
 ## Screenshot
 
 ![Admin Dashboard Screenshot](./src/assets/screenshot.png)
