@@ -5,6 +5,7 @@ export type BoardData = {
     columnOrder: string[]
 }
 export type Priority = "low" | "medium" | "high"
+export type PriorityFilter = Priority | "all"
 export type Task = { 
     id: string; 
     title: string;

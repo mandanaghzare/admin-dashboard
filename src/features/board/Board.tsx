@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { mockData } from "./mockData"
-import { type Priority, type BoardData, type Task } from "./types"
+import { type Priority, type BoardData, type Task, type PriorityFilter } from "./types"
 import { Column } from "./Column"
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd"
 import { TaskChart } from "../dashboard/TasksChart"
@@ -30,7 +30,8 @@ const Board = () => {
   const [taskTitle, setTaskTitle] = useState("");
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [priority, setPriority] = useState<Priority>("medium")
-  const [priorityFilter, setPriorityFilter] = useState<Priority | "all">("all")
+  const [priorityFilter, setPriorityFilter] = useState<PriorityFilter>("all")
+  const [searchTerm, setSearchTerm] = useState("")
 
 
   
@@ -197,11 +198,11 @@ const Board = () => {
     }))
   }
 
-  const priorityOptions = [
-    { label: "Low", value:"low" },
-    { label: "Medium", value:"medium" },
-    { label: "High", value:"high" },
-  ]
+  // const priorityOptions = [
+  //   { label: "Low", value:"low" },
+  //   { label: "Medium", value:"medium" },
+  //   { label: "High", value:"high" },
+  // ]
   const priorityFilterOptions = [
   { label: "All", value: "all" },
   { label: "Low", value: "low" },
@@ -238,19 +239,25 @@ const Board = () => {
             onChange={setTaskTitle}
             placeHolder="Enter Task..."
           />
-          <Select value={priority} onChange={(value) => setPriority(value as Priority)} options={priorityOptions} />
+          <Select value={priority} onChange={(value) => setPriority(value as Priority)} options={priorityFilterOptions} />
           <Button variant="primary" onClick={handleAddTask}>Add Task</Button>
         </div>
-        <div className="filterWrapper">
-          <span className="filterLabel">Filter by priority:</span>
-
-          <Select
-            value={priorityFilter}
-            onChange={(value) =>
-              setPriorityFilter(value as Priority | "all")
-            }
-            options={priorityFilterOptions}
-          />
+        <div className="search-filter">
+          <div className="searchTerm">
+            <Input
+              value={searchTerm}
+              onChange={setSearchTerm}
+              placeHolder="Search tasks..."
+            />        
+          </div>
+          <div className="filterWrapper">
+            <span className="filterLabel">Filter by priority:</span>
+            <Select
+              value={priorityFilter}
+              onChange={(value) => setPriorityFilter(value as PriorityFilter)}
+              options={priorityFilterOptions}
+            />
+          </div>
         </div>
         <div className="todoList">
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -267,6 +274,8 @@ const Board = () => {
                     onDeleteTask={handleDeleteTask}
                     onMoveTask={handleMoveTask}
                     onEditTask={(task) => setSelectedTask(task)}
+                    searchTerm={searchTerm}
+                    priority={priorityFilter}
                   />
                 )
               })

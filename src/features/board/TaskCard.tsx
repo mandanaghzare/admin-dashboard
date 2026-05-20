@@ -20,13 +20,13 @@ export const TaskCard = ({title, onDelete, onMove, index, taskId, onEdit, task}:
                         <button onClick={() => {onEdit()}} className="editBtn">
                             <MdEdit  />
                         </button>
-                        <div className="title">{title}</div>
                         <div className={`priority priority-${task.priority}`}>
                             {task.priority}
                         </div>
+                        <div className="title">{title}</div>
                         <div className="action">
+                            <Button variant="primary" onClick={onMove}>Move To Next ◘Level</Button>
                             <Button variant="danger" onClick={onDelete}>Delete</Button>
-                            <Button variant="primary" onClick={onMove}>Move To Next Level</Button>
                         </div>
                     </div>
                 )}

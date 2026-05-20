@@ -286,6 +286,15 @@ body.dark {
   }
 }
 
+.search-filter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .searchTerm, .filterWrapper{
+    margin: 0px 18px;
+  }
+}
+
 /* Tablet */
 @media (max-width: 1024px) {
   .board {

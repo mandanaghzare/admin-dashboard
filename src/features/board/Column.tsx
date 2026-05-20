@@ -1,5 +1,5 @@
 import { TaskCard } from "./TaskCard"
-import type { Column as ColumnType, Task } from "./types"
+import type { Column as ColumnType, PriorityFilter, Task } from "./types"
 import { Droppable } from "@hello-pangea/dnd"
 
 type ColumnProps = {
@@ -8,12 +8,23 @@ type ColumnProps = {
     onDeleteTask: (taskId: string) => void
     onMoveTask: (taskId: string) => void
     onEditTask: (task: Task) => void
+    priority: PriorityFilter
+    searchTerm: string
 }
 
-export const Column = ({column, tasks, onDeleteTask, onMoveTask, onEditTask}: ColumnProps) => {
+export const Column = ({column, tasks, onDeleteTask, onMoveTask, onEditTask, priority, searchTerm}: ColumnProps) => {
     const visibleTasks = column.taskIds
     .map((taskId) => tasks[taskId])
     .filter(Boolean)
+    .filter((task) => {
+        const matchesPriority =
+        priority === "all" || task.priority === priority
+
+        const matchesSearch =
+        task.title.toLowerCase().includes(searchTerm.toLowerCase())
+
+        return matchesPriority && matchesSearch
+    })
     
     return(
         <div className="column">
