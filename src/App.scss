@@ -348,6 +348,13 @@ body.dark {
     padding: 16px;
   }
 
+  .search-filter{
+    flex-direction: column;
+    .searchTerm{
+      margin-bottom: 16px;
+    }
+  }
+
   .addButton {
     flex-direction: column;
   }
