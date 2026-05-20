@@ -1,73 +1,77 @@
-# React + TypeScript + Vite
+# Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive admin dashboard built with React, TypeScript, Vite, SCSS, Recharts, and @hello-pangea/dnd.
 
-Currently, two official plugins are available:
+This project focuses on complex state management, drag-and-drop interactions, data visualization, reusable UI components, and persisted user preferences using localStorage.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Main Goals
 
-## React Compiler
+- Build a Trello-like task management board
+- Practice drag-and-drop interaction with complex state updates
+- Display dashboard data using charts
+- Implement reusable UI components
+- Add user personalization with persistent preferences
+- Support dark and light mode
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+### Task Management
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Add new tasks
+- Edit task title and priority
+- Delete tasks
+- Move tasks between columns
+- Drag and drop tasks between columns
+- Empty state for columns without visible tasks
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Filtering and Search
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Search tasks by title
+- Filter tasks by priority
+- Combine search and priority filtering
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Data Visualization
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Task chart based on board data
+- Live activity chart
+- Show / hide chart preference
+- Chart visibility saved in localStorage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Personalization
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Dark / light mode
+- Theme saved in localStorage
+- Chart layout preference saved in localStorage
+- Task board data saved in localStorage
+
+### UI / UX
+
+- Responsive layout
+- Reusable Button component
+- Reusable Input component
+- Reusable Select component
+- Reusable Modal component
+- Priority badges
+- Hover edit action
+- Mobile-friendly theme toggle
+
+## Screenshot
+
+![Admin Dashboard Screenshot](./src/assets/screenshot.png)
+
+## Tech Stack
+
+- React
+- TypeScript
+- Vite
+- SCSS
+- Recharts
+- @hello-pangea/dnd
+- localStorage
+
+## Getting Started
+
+Install dependencies:
+
+```bash
+npm install
